@@ -26,3 +26,69 @@ If you want the same content as a reusable skill under `~/.cursor/skills`, use [
 ## For contributors
 
 When you change the four principles, keep **[`CLAUDE.md`](CLAUDE.md)** and **[`.cursor/rules/karpathy-guidelines.mdc`](.cursor/rules/karpathy-guidelines.mdc)** in sync. If the published skill/plugin text should match, update **[`skills/karpathy-guidelines/SKILL.md`](skills/karpathy-guidelines/SKILL.md)** as well.
+
+
+## Core Development Rules
+
+
+1. Code Quality
+   - Type hints required for all code
+   - Public APIs must have docstrings
+   - Functions must be focused and small
+   - Follow existing patterns exactly
+   - Line length: 88 chars maximum
+
+2. Testing Requirements
+   - Framework: `uv run pytest`
+   - Async testing: use anyio, not asyncio
+   - Coverage: test edge cases and errors
+   - New features require tests
+   - Bug fixes require regression tests
+
+3. Code Style
+    - PEP 8 naming (snake_case for functions/variables)
+    - Class names in PascalCase
+    - Constants in UPPER_SNAKE_CASE
+    - Document with docstrings
+    - Use f-strings for formatting
+
+
+## Python Tools
+
+## Package Management
+   - ONLY use uv
+   - Installation: `uv add package`
+   - Running tools: `uv run tool`
+   - Upgrading: `uv add --dev package --upgrade-package package`
+   - FORBIDDEN: `uv pip install`, `@latest` syntax
+
+
+## Code Formatting
+1. Ruff
+   - Format: `uv run ruff format .`
+   - Check: `uv run ruff check .`
+   - Fix: `uv run ruff check . --fix`
+   - Critical issues:
+     - Line length (88 chars)
+     - Import sorting (I001)
+     - Unused imports
+   - Line wrapping:
+     - Strings: use parentheses
+     - Function calls: multi-line with proper indent
+     - Imports: split into multiple lines
+
+2. Type Checking
+   - Tool: `uv run pyright`
+   - Requirements:
+     - Explicit None checks for Optional
+     - Type narrowing for strings
+     - Version warnings can be ignored if checks pass
+
+3. Pre-commit
+   - Config: `.pre-commit-config.yaml`
+   - Runs: on git commit
+   - Tools: Prettier (YAML/JSON), Ruff (Python)
+   - Ruff updates:
+     - Check PyPI versions
+     - Update config rev
+     - Commit config first
